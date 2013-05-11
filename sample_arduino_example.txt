@@ -21,15 +21,37 @@
 /*-----( Declare Constants, Pin Numbers )-----*/
 #define STEPS  100   //Number of steps per revolution
 
+/**
+We can use adafruit's Small Reduction Stepper Motor
+(5VDC 512 Step) for this. See http://www.adafruit.com/products/858
 
-/*-----( Declare objects )-----*/
-/* create an instance of the stepper class, specifying
- the number of steps of the motor and the pins it's
- attached to. The pin connections need to be 4 pins connected
- to Motor Driver In1, In2, In3, In4  and then the pins entered
- here in the sequence 1-3-2-4 for proper sequencing*/
 
-Stepper small_stepper(STEPS, 3, 6, 5, 9);
+O1A - Yellow
+O1B - Pink
+02A - Blue
+02B - Orange
+
+VDD - Arduino 5V
+LGND - Arduino GND
+
+VM - 5V (Power Source)
+VM - Ground (Power Source)
+
+(Don't connect the stepper's red wire to anything.)
+
+IN1A - Arduino Pin 9
+IN1B - Arduino Pin 6
+IN2A - Arduino Pin 5
+IN2B - Arduino Pin 3
+
+*/
+
+int in1A = 9;
+int in1B = 6;
+int in2A = 5;
+int in2B = 3;
+
+Stepper small_stepper(STEPS, in1A, in1B, in2A, in2B);
 
 int  Steps2Take = 0;
 
@@ -38,7 +60,10 @@ void setup(){
 void loop()   
 {
   small_stepper.setSpeed(16);
-  Steps2Take  = 10;  // Rotate CW steps = 2058
+  
+  // Positive number goes one way, 
+  // negative number goes the other way
+  Steps2Take  = 10; 
   small_stepper.step(Steps2Take);
   delay(10);
   
